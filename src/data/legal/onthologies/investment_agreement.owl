@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://example.org/heroify#"
+     xml:base="http://example.org/heroify"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+    <owl:Ontology rdf:about="http://example.org/heroify"/>
+
+    <!-- Classes -->
+    <owl:Class rdf:about="#Person"/>
+    <owl:Class rdf:about="#Founder"/>
+    <owl:Class rdf:about="#Investor"/>
+    <owl:Class rdf:about="#Company"/>
+    <owl:Class rdf:about="#Agreement"/>
+    <owl:Class rdf:about="#Shareholding"/>
+    <owl:Class rdf:about="#Event"/>
+    <owl:Class rdf:about="#ShareTransfer"/>
+    <owl:Class rdf:about="#Accession"/>
+    <owl:Class rdf:about="#CapitalIncrease"/>
+    <owl:Class rdf:about="#Redemption"/>
+
+    <!-- Object Properties -->
+    <owl:ObjectProperty rdf:about="#hasRole">
+        <rdfs:domain rdf:resource="#Person"/>
+        <rdfs:range rdf:resource="#Agreement"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#isPartyTo">
+        <rdfs:domain rdf:resource="#Person"/>
+        <rdfs:range rdf:resource="#Agreement"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#hasShareholding">
+        <rdfs:domain rdf:resource="#Person"/>
+        <rdfs:range rdf:resource="#Shareholding"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#involvesCompany">
+        <rdfs:domain rdf:resource="#Agreement"/>
+        <rdfs:range rdf:resource="#Company"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#resultsIn">
+        <rdfs:domain rdf:resource="#Event"/>
+        <rdfs:range rdf:resource="#Shareholding"/>
+    </owl:ObjectProperty>
+
+    <!-- Data Properties -->
+    <owl:DatatypeProperty rdf:about="#fullName">
+        <rdfs:domain rdf:resource="#Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#sharesHeld">
+        <rdfs:domain rdf:resource="#Shareholding"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#date">
+        <rdfs:domain rdf:resource="#Event"/>
+        <rdfs:range rdf:resource="&xsd;date"/>
+    </owl:DatatypeProperty>
+
+    <!-- Individuals -->
+    <owl:NamedIndividual rdf:about="#Heroify">
+        <rdf:type rdf:resource="#Company"/>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="#Maciej_Lotkowski">
+        <rdf:type rdf:resource="#Founder"/>
+        <fullName>Maciej Lotkowski</fullName>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="#Annex_3">
+        <rdf:type rdf:resource="#Agreement"/>
+        <involvesCompany rdf:resource="#Heroify"/>
+    </owl:NamedIndividual>
+
+</rdf:RDF>
