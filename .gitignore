@@ -195,4 +195,4 @@ SWE-bench_testsample/
 # ChromaDB Data
 .chromadb_data/
 
-src/data/legal/*
+src/data/legal/input/*
