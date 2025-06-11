@@ -1,8 +1,11 @@
 import os
 import asyncio
 import pathlib
+import webbrowser
+
 from cognee import config, add, cognify, search, SearchType, prune, visualize_graph
 from cognee.shared.utils import render_graph
+
 # from cognee.low_level import DataPoint
 
 
@@ -103,16 +106,15 @@ async def main():
     config.system_root_directory(cognee_directory_path)
 
     if os.getenv("INGEST", "0") in ["1"]:
-        print("Ingesting data...")
         await ingest(ia_file_path)
 
     if os.getenv("COGNIFY", "0") in ["1"]:
-        print("Cognifying data...")
         await cognify(ontology_file_path=ontology_file_path)
 
     # Get a graphistry url (Register for a free account at https://www.graphistry.com)
     url = await render_graph()
     print(f"Graphistry URL: {url}")
+    webbrowser.open(url)
 
     # Or use our simple graph preview
     # graph_file_path = str(
