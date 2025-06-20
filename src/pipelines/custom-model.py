@@ -5,68 +5,67 @@ import webbrowser
 
 from cognee import config, add, cognify, search, SearchType, prune, visualize_graph
 from cognee.shared.utils import render_graph
-
-# from cognee.low_level import DataPoint
-
-
-# class PersonType(DataPoint):
-#     name: str = "Person"
-
-# class Person(DataPoint):
-#     full_name: str
-#     is_type: PersonType
-#     metadata: dict = {"index_fields": ["full_name"]}
+from cognee.low_level import DataPoint
 
 
-# class RoleType(DataPoint):
-#     name: str = "Role"
+class PersonType(DataPoint):
+    name: str = "Person"
 
-# class Role(DataPoint):
-#     name: str  # e.g., "Founder", "Investor"
-#     is_type: RoleType
-#     metadata: dict = {"index_fields": ["name"]}
-
-
-# class CompanyType(DataPoint):
-#     name: str = "Company"
-
-# class Company(DataPoint):
-#     name: str
-#     registered_office: str
-#     is_type: CompanyType
-#     metadata: dict = {"index_fields": ["name"]}
+class Person(DataPoint):
+    full_name: str
+    is_type: PersonType
+    metadata: dict = {"index_fields": ["full_name"]}
 
 
-# class AgreementType(DataPoint):
-#     name: str = "Agreement"
+class RoleType(DataPoint):
+    name: str = "Role"
 
-# class Agreement(DataPoint):
-#     title: str
-#     signing_date: str
-#     involves_company: Company
-#     parties: list[Person] = []
-#     is_type: AgreementType
-#     metadata: dict = {"index_fields": ["title"]}
+class Role(DataPoint):
+    name: str  # e.g., "Founder", "Investor"
+    is_type: RoleType
+    metadata: dict = {"index_fields": ["name"]}
 
 
-# class ShareTransactionType(DataPoint):
-#     name: str = "Share Transaction"
+class CompanyType(DataPoint):
+    name: str = "Company"
 
-# class ShareTransaction(DataPoint):
-#     date: str
-#     shares_transferred: int
-#     from_person: Person
-#     to_person: Person
-#     agreement: Agreement
-#     is_type: ShareTransactionType
-#     metadata: dict = {"index_fields": ["date"]}
+class Company(DataPoint):
+    name: str
+    registered_office: str
+    is_type: CompanyType
+    metadata: dict = {"index_fields": ["name"]}
 
 
-# class Shareholding(DataPoint):
-#     shareholder: Person
-#     company: Company
-#     shares: int
-#     metadata: dict = {"index_fields": ["shareholder", "company"]}
+class AgreementType(DataPoint):
+    name: str = "Agreement"
+
+class Agreement(DataPoint):
+    title: str
+    signing_date: str
+    involves_company: Company
+    parties: list[Person] = []
+    is_type: AgreementType
+    metadata: dict = {"index_fields": ["title"]}
+
+
+class ShareTransactionType(DataPoint):
+    name: str = "Share Transaction"
+
+class ShareTransaction(DataPoint):
+    date: str
+    shares_transferred: int
+    from_person: Person
+    to_person: Person
+    agreement: Agreement
+    is_type: ShareTransactionType
+    metadata: dict = {"index_fields": ["date"]}
+
+
+class Shareholding(DataPoint):
+    shareholder: Person
+    company: Company
+    shares: int
+    metadata: dict = {"index_fields": ["shareholder", "company"]}
 
 async def ingest(file_path: str):
     await prune.prune_data()
@@ -98,7 +97,7 @@ async def main():
 
     ontology_file_path = str(
         pathlib.Path(
-            os.path.join(pathlib.Path(__file__).parent, "../data/legal/ontologies/investment_agreement.owl")
+            os.path.join(pathlib.Path(__file__).parent, "../data/ontologies/fibo-master/catalog-v001.xml")
         ).resolve()
     )
 
@@ -111,7 +110,6 @@ async def main():
     if os.getenv("COGNIFY", "0") in ["1"]:
         await cognify(ontology_file_path=ontology_file_path)
 
-    # Get a graphistry url (Register for a free account at https://www.graphistry.com)
     url = await render_graph()
     print(f"Graphistry URL: {url}")
     webbrowser.open(url)
