@@ -1,3 +1,4 @@
+from asyncio.log import logger
 import os
 import asyncio
 import pathlib
@@ -9,65 +10,6 @@ from cognee import config, add, cognify, search, SearchType, prune, visualize_gr
 from cognee.shared.utils import render_graph
 from cognee.low_level import DataPoint
 
-
-class PersonType(DataPoint):
-    name: str = "Person"
-
-class Person(DataPoint):
-    full_name: str
-    is_type: PersonType
-    metadata: dict = {"index_fields": ["full_name"]}
-
-
-class RoleType(DataPoint):
-    name: str = "Role"
-
-class Role(DataPoint):
-    name: str  # e.g., "Founder", "Investor"
-    is_type: RoleType
-    metadata: dict = {"index_fields": ["name"]}
-
-
-class CompanyType(DataPoint):
-    name: str = "Company"
-
-class Company(DataPoint):
-    name: str
-    registered_office: str
-    is_type: CompanyType
-    metadata: dict = {"index_fields": ["name"]}
-
-
-class AgreementType(DataPoint):
-    name: str = "Agreement"
-
-class Agreement(DataPoint):
-    title: str
-    signing_date: str
-    involves_company: Company
-    parties: list[Person] = []
-    is_type: AgreementType
-    metadata: dict = {"index_fields": ["title"]}
-
-
-class ShareTransactionType(DataPoint):
-    name: str = "Share Transaction"
-
-class ShareTransaction(DataPoint):
-    date: str
-    shares_transferred: int
-    from_person: Person
-    to_person: Person
-    agreement: Agreement
-    is_type: ShareTransactionType
-    metadata: dict = {"index_fields": ["date"]}
-
-
-class Shareholding(DataPoint):
-    shareholder: Person
-    company: Company
-    shares: int
-    metadata: dict = {"index_fields": ["shareholder", "company"]}
 
 async def merge_ontology(catalog_path: str, output_path: str) -> str:
     """
