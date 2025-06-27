@@ -153,22 +153,32 @@ async def main():
 
     merged_ontology_path = str(
         pathlib.Path(
-            os.path.join(pathlib.Path(__file__).parent, "../data/ontologies/folio.owl")
+            os.path.join(pathlib.Path(__file__).parent, "../data/ontologies/legal_vc.owl")
         ).resolve()
     )
 
     # Set up the Cognee system directory. Cognee will store system files and databases here.
     config.system_root_directory(cognee_directory_path)
+    config.entity_extraction_prompt = """Extract key legal concepts and their relationships.
+
+    Extreact the concept classess, ex. Company, Person, but also their instances, ex. Some Company sp. z o.o, or person John Smith.
+    Extract their attributes, ex. Company name, Person name, etc.
+    Extract their relationships, ex. Company is a parent of another Company, Person is a shareholder of a Company, etc.
+    Extract their dates, ex. Company was founded in 2020, Person was born in 1990, The loan conversion has to be completed by 2025-01-01, etc.
+    Extract legal terms, ex. Share, Shareholder, Drag-Along Clause, etc.
+    Extract legal terms and their relationships, ex. Shareholder is a person who owns a share of a company, Drag-Along Clause is a clause in an agreement that allows a company to drag along another company to a transaction, etc.
+    """
 
     # Run merge_ontologies if the merged ontology file does not exist, or if MERGE_ONTOLOGY=1
     # if not os.path.exists(merged_ontology_path) or os.getenv("MERGE_ONTOLOGY", "0") in ["1"]:
     #     await merge_ontology(catalog_file_path, merged_ontology_path)
 
+
     if os.getenv("INGEST", "0") in ["1"]:
         await ingest(ia_file_path)
 
     if os.getenv("COGNIFY", "0") in ["1"]:
-        await cognify(ontology_file_path=merged_ontology_path)
+        await cognify() # ontology_file_path=merged_ontology_path)
 
     url = await render_graph()
     print(f"Graphistry URL: {url}")
