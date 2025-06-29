@@ -1,15 +1,30 @@
-from asyncio.log import logger
-import os
 import asyncio
+import os
 import pathlib
 import webbrowser
 import xml.etree.ElementTree as ET
+from typing import Optional, Union
+
+from pydantic import BaseModel
 from rdflib import Graph
 
-from cognee import config, add, cognify, search, SearchType, prune, visualize_graph
+from cognee import add, config, prune
+from cognee.infrastructure.llm import get_max_chunk_tokens
+from cognee.modules.chunking.TextChunker import TextChunker
+from cognee.modules.ontology.rdf_xml.OntologyResolver import OntologyResolver
+from cognee.modules.pipelines import Task, cognee_pipeline
+from cognee.modules.users.models import User
+from cognee.shared.data_models import KnowledgeGraph
+from cognee.shared.logging_utils import get_logger
 from cognee.shared.utils import render_graph
-from cognee.low_level import DataPoint
-
+from cognee.tasks.documents import (
+    check_permissions_on_documents,
+    classify_documents,
+    extract_chunks_from_documents,
+)
+from cognee.tasks.graph import extract_graph_from_data
+from cognee.tasks.storage import add_data_points
+from cognee.tasks.summarization import summarize_text
 
 
 logger = get_logger("bide")
@@ -61,6 +76,52 @@ async def merge_ontology(catalog_path: str, output_path: str) -> str:
 
     return output_path
 
+async def my_cognify(
+    datasets: Union[str, list[str]] = None,
+    user: User = None,
+    graph_model: BaseModel = KnowledgeGraph,
+    chunker=TextChunker,
+    chunk_size: int = None,
+    ontology_file_path: Optional[str] = None,
+):
+
+    tasks = await get_default_tasks(user, graph_model, chunker, chunk_size, ontology_file_path)
+
+    return await cognee_pipeline(
+        tasks=tasks, datasets=datasets, user=user, pipeline_name="cognify_pipeline"
+    )
+
+
+async def get_default_tasks(  # TODO: Find out a better way to do this (Boris's comment)
+    user: User = None,
+    graph_model: BaseModel = KnowledgeGraph,
+    chunker=TextChunker,
+    chunk_size: int = None,
+    ontology_file_path: Optional[str] = None,
+) -> list[Task]:
+    default_tasks = [
+        Task(classify_documents),
+        Task(check_permissions_on_documents, user=user, permissions=["write"]),
+        Task(
+            extract_chunks_from_documents,
+            max_chunk_size=chunk_size or get_max_chunk_tokens(),
+            chunker=chunker,
+        ),  # Extract text chunks based on the document type.
+        Task(
+            extract_graph_from_data,
+            graph_model=graph_model,
+            ontology_adapter=OntologyResolver(ontology_file=ontology_file_path),
+            task_config={"batch_size": 10},
+        ),  # Generate knowledge graphs from the document chunks.
+        Task(
+            summarize_text,
+            task_config={"batch_size": 10},
+        ),
+        Task(add_data_points, task_config={"batch_size": 10}),
+    ]
+
+    return default_tasks
+
 
 async def ingest(file_path: str):
     await prune.prune_data()
@@ -75,8 +136,6 @@ async def main():
             os.path.join(pathlib.Path(__file__).parent, ".data_storage")
         ).resolve()
     )
-    # Set up the data directory. Cognee will store files here.
-    config.data_root_directory(data_directory_path)
 
     cognee_directory_path = str(
         pathlib.Path(
@@ -102,7 +161,7 @@ async def main():
         ).resolve()
     )
 
-    # Set up the Cognee system directory. Cognee will store system files and databases here.
+    config.data_root_directory(data_directory_path)
     config.system_root_directory(cognee_directory_path)
     config.entity_extraction_prompt = """Extract key legal concepts and their relationships.
 
@@ -114,16 +173,12 @@ async def main():
     Extract legal terms and their relationships, ex. Shareholder is a person who owns a share of a company, Drag-Along Clause is a clause in an agreement that allows a company to drag along another company to a transaction, etc.
     """
 
-    # Run merge_ontologies if the merged ontology file does not exist, or if MERGE_ONTOLOGY=1
-    # if not os.path.exists(merged_ontology_path) or os.getenv("MERGE_ONTOLOGY", "0") in ["1"]:
-    #     await merge_ontology(catalog_file_path, merged_ontology_path)
-
 
     if os.getenv("INGEST", "0") in ["1"]:
         await ingest(ia_file_path)
 
     if os.getenv("COGNIFY", "0") in ["1"]:
-        await cognify() # ontology_file_path=merged_ontology_path)
+        await my_cognify()
 
     url = await render_graph()
     print(f"Graphistry URL: {url}")
