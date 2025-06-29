@@ -11,6 +11,7 @@ from rdflib import Graph
 from cognee import add, config, prune
 from cognee.infrastructure.llm import get_max_chunk_tokens
 from cognee.modules.chunking.TextChunker import TextChunker
+from cognee.modules.chunking.models.DocumentChunk import DocumentChunk
 from cognee.modules.ontology.rdf_xml.OntologyResolver import OntologyResolver
 from cognee.modules.pipelines import Task, cognee_pipeline
 from cognee.modules.users.models import User
@@ -91,6 +92,17 @@ async def my_cognify(
         tasks=tasks, datasets=datasets, user=user, pipeline_name="cognify_pipeline"
     )
 
+async def build_ontology(chunks: list[DocumentChunk]):
+    for chunk in chunks:
+        text = chunk.text
+        # TODO gradually build ontology from chunks
+
+
+    # TODO figure out if tasks are executed in parallel or sequentially
+    return chunks
+
+
+
 
 async def get_default_tasks(  # TODO: Find out a better way to do this (Boris's comment)
     user: User = None,
@@ -106,13 +118,14 @@ async def get_default_tasks(  # TODO: Find out a better way to do this (Boris's 
             extract_chunks_from_documents,
             max_chunk_size=chunk_size or get_max_chunk_tokens(),
             chunker=chunker,
-        ),  # Extract text chunks based on the document type.
+        ),
+        Task(build_ontology),
         Task(
             extract_graph_from_data,
             graph_model=graph_model,
             ontology_adapter=OntologyResolver(ontology_file=ontology_file_path),
             task_config={"batch_size": 10},
-        ),  # Generate knowledge graphs from the document chunks.
+        ),
         Task(
             summarize_text,
             task_config={"batch_size": 10},
