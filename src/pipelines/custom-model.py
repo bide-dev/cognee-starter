@@ -11,6 +11,9 @@ from cognee.shared.utils import render_graph
 from cognee.low_level import DataPoint
 
 
+
+logger = get_logger("bide")
+
 async def merge_ontology(catalog_path: str, output_path: str) -> str:
     """
     Parses an XML catalog file to find all .rdf ontology files,
