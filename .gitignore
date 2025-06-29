@@ -196,3 +196,4 @@ SWE-bench_testsample/
 .chromadb_data/
 
 src/data/legal/input/*
+requirements
