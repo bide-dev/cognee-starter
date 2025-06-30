@@ -32,19 +32,35 @@ from cognee.tasks.summarization import summarize_text
 
 logger = get_logger("bide")
 
+class OntologyProperty(BaseModel):
+    """Represents a property/relationship in the ontology."""
+    name: str = Field(description="Name of the property")
+    domain: Optional[str] = Field(default=None, description="Domain class for the property")
+    range: Optional[str] = Field(default=None, description="Range class for the property")
+
+class OntologyIndividual(BaseModel):
+    """Represents a named individual in the ontology."""
+    name: str = Field(description="Name of the individual")
+    class_type: str = Field(description="Class that this individual belongs to", alias="class")
+
+class OntologyHierarchy(BaseModel):
+    """Represents a class hierarchy relationship."""
+    parent: str = Field(description="Parent class")
+    child: str = Field(description="Child class")
+
 class OntologyElement(BaseModel):
     """Represents an ontology element extracted from text."""
     classes: List[str] = Field(default_factory=list, description="Classes/concepts found in the text")
-    properties: List[Dict[str, str]] = Field(default_factory=list, description="Properties/relationships with source and target")
-    individuals: List[Dict[str, str]] = Field(default_factory=list, description="Named individuals with their class")
-    hierarchies: List[Dict[str, str]] = Field(default_factory=list, description="Subclass relationships")
+    properties: List[OntologyProperty] = Field(default_factory=list, description="Properties/relationships with source and target")
+    individuals: List[OntologyIndividual] = Field(default_factory=list, description="Named individuals with their class")
+    hierarchies: List[OntologyHierarchy] = Field(default_factory=list, description="Subclass relationships")
 
 class AccumulatedOntology(BaseModel):
     """Accumulated ontology from all chunks."""
     classes: List[str] = Field(default_factory=list)
-    properties: List[Dict[str, str]] = Field(default_factory=list)
-    individuals: List[Dict[str, str]] = Field(default_factory=list)
-    hierarchies: List[Dict[str, str]] = Field(default_factory=list)
+    properties: List[OntologyProperty] = Field(default_factory=list)
+    individuals: List[OntologyIndividual] = Field(default_factory=list)
+    hierarchies: List[OntologyHierarchy] = Field(default_factory=list)
 
 async def merge_ontology(catalog_path: str, output_path: str) -> str:
     """
@@ -108,7 +124,7 @@ async def my_cognify(
         tasks=tasks, datasets=datasets, user=user, pipeline_name="cognify_pipeline"
     )
 
-async def build_ontology(chunks: list[DocumentChunk]) -> list[DocumentChunk]:
+async def build_ontology(chunks: list[DocumentChunk], custom_ontology_path: str = "./src/data/ontologies/custom.owl") -> list[DocumentChunk]:
     """
     Build a custom ontology from document chunks using LLM extraction.
     Accumulates ontological knowledge across all chunks and saves to custom.owl.
@@ -176,13 +192,13 @@ For hierarchies, specify parent-child relationships clearly.
             continue
     
     # Create RDF ontology
-    await create_rdf_ontology(accumulated)
+    await create_rdf_ontology(accumulated, custom_ontology_path)
     
     logger.info(f"Ontology built with {len(accumulated.classes)} classes, {len(accumulated.properties)} properties, {len(accumulated.individuals)} individuals")
     
     return chunks
 
-async def create_rdf_ontology(ontology: AccumulatedOntology):
+async def create_rdf_ontology(ontology: AccumulatedOntology, output_path: str = "./src/data/ontologies/custom.owl"):
     """
     Create and serialize RDF/OWL ontology from accumulated ontology elements.
     """
@@ -211,36 +227,35 @@ async def create_rdf_ontology(ontology: AccumulatedOntology):
     
     # Add hierarchies (subclass relationships)
     for hierarchy in ontology.hierarchies:
-        if "parent" in hierarchy and "child" in hierarchy:
-            parent_uri = CUSTOM[hierarchy["parent"].replace(" ", "")]
-            child_uri = CUSTOM[hierarchy["child"].replace(" ", "")]
+        if hierarchy.parent and hierarchy.child:
+            parent_uri = CUSTOM[hierarchy.parent.replace(" ", "")]
+            child_uri = CUSTOM[hierarchy.child.replace(" ", "")]
             g.add((child_uri, RDFS.subClassOf, parent_uri))
     
     # Add properties
     for prop in ontology.properties:
-        if "name" in prop:
-            prop_uri = CUSTOM[prop["name"].replace(" ", "")]
+        if prop.name:
+            prop_uri = CUSTOM[prop.name.replace(" ", "")]
             g.add((prop_uri, RDF.type, OWL.ObjectProperty))
-            g.add((prop_uri, RDFS.label, Literal(prop["name"])))
+            g.add((prop_uri, RDFS.label, Literal(prop.name)))
             
             # Add domain and range if specified
-            if "domain" in prop:
-                domain_uri = CUSTOM[prop["domain"].replace(" ", "")]
+            if prop.domain:
+                domain_uri = CUSTOM[prop.domain.replace(" ", "")]
                 g.add((prop_uri, RDFS.domain, domain_uri))
-            if "range" in prop:
-                range_uri = CUSTOM[prop["range"].replace(" ", "")]
+            if prop.range:
+                range_uri = CUSTOM[prop.range.replace(" ", "")]
                 g.add((prop_uri, RDFS.range, range_uri))
     
     # Add individuals
     for individual in ontology.individuals:
-        if "name" in individual and "class" in individual:
-            ind_uri = CUSTOM[individual["name"].replace(" ", "").replace(".", "")]
-            cls_uri = CUSTOM[individual["class"].replace(" ", "")]
+        if individual.name and individual.class_type:
+            ind_uri = CUSTOM[individual.name.replace(" ", "").replace(".", "")]
+            cls_uri = CUSTOM[individual.class_type.replace(" ", "")]
             g.add((ind_uri, RDF.type, cls_uri))
-            g.add((ind_uri, RDFS.label, Literal(individual["name"])))
+            g.add((ind_uri, RDFS.label, Literal(individual.name)))
     
     # Ensure output directory exists
-    output_path = "./src/data/ontologies/custom.owl"
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     
     # Serialize to file
@@ -268,7 +283,7 @@ async def get_default_tasks(  # TODO: Find out a better way to do this (Boris's 
             max_chunk_size=chunk_size or get_max_chunk_tokens(),
             chunker=chunker,
         ),
-        Task(build_ontology),
+        Task(build_ontology, custom_ontology_path=custom_ontology_path),
         Task(
             extract_graph_from_data,
             graph_model=graph_model,
