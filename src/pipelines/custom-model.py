@@ -118,7 +118,7 @@ async def my_cognify(
     ontology_file_path: Optional[str] = None,
 ):
 
-    tasks = await get_default_tasks(user, graph_model, chunker, chunk_size, ontology_file_path)
+    tasks = await get_tasks(user, graph_model, chunker, chunk_size, ontology_file_path)
 
     return await cognee_pipeline(
         tasks=tasks, datasets=datasets, user=user, pipeline_name="cognify_pipeline"
@@ -265,7 +265,7 @@ async def create_rdf_ontology(ontology: AccumulatedOntology, output_path: str = 
 
 
 
-async def get_default_tasks(  # TODO: Find out a better way to do this (Boris's comment)
+async def get_tasks(  # TODO: Find out a better way to do this (Boris's comment)
     user: User = None,
     graph_model: BaseModel = KnowledgeGraph,
     chunker=TextChunker,
