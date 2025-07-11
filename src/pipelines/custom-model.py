@@ -208,13 +208,19 @@ async def my_cognify(
         tasks=tasks, datasets=datasets, user=user, pipeline_name="cognify_pipeline"
     )
 
-async def build_ontology(chunks: list[DocumentChunk], custom_ontology_path: str = "./src/data/ontologies/custom.owl") -> list[DocumentChunk]:
+async def build_ontology(chunks: list[DocumentChunk], custom_ontology_path: str = None) -> list[DocumentChunk]:
     """
     Build a custom ontology from document chunks using LLM extraction.
     Accumulates ontological knowledge across all chunks and saves to custom.owl.
     Now supports loading existing ontology and merging new knowledge.
     """
+    # Set default path if not provided
+    if custom_ontology_path is None:
+        project_root = pathlib.Path(__file__).parent.parent.parent
+        custom_ontology_path = str(project_root / "src" / "data" / "ontologies" / "custom.owl")
+    
     logger.info(f"Building ontology from {len(chunks)} chunks")
+    logger.info(f"Ontology will be saved to: {custom_ontology_path}")
     
     # Get LLM client
     llm_client = get_llm_client()
@@ -422,7 +428,9 @@ async def get_tasks(  # TODO: Find out a better way to do this (Boris's comment)
     ontology_file_path: Optional[str] = None,
 ) -> list[Task]:
     # Use custom ontology path built from chunks
-    custom_ontology_path = "./src/data/ontologies/custom.owl"
+    # Use absolute path to ensure consistent location regardless of working directory
+    project_root = pathlib.Path(__file__).parent.parent.parent
+    custom_ontology_path = str(project_root / "src" / "data" / "ontologies" / "custom.owl")
     
     default_tasks = [
         Task(classify_documents),
@@ -454,7 +462,9 @@ async def ingest(file_path: str):
     await prune.prune_system(metadata=True)
     
     # Clean up ontology files for fresh start
-    custom_ontology_path = "./src/data/ontologies/custom.owl"
+    # Use absolute path to ensure consistent location regardless of working directory
+    project_root = pathlib.Path(__file__).parent.parent.parent
+    custom_ontology_path = str(project_root / "src" / "data" / "ontologies" / "custom.owl")
     if os.path.exists(custom_ontology_path):
         os.remove(custom_ontology_path)
         logger.info(f"Removed existing ontology file: {custom_ontology_path}")
