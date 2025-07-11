@@ -3,65 +3,265 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 >
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#governedBy">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasLossAmountExceeding">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>governedBy</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Law"/>
+    <rdfs:label>hasLossAmountExceeding</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Breach"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Threshold"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#sendsInformationTo">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>sendsInformationTo</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Company"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#LegalEntity"/>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#PFRTFISA">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#LegalEntity"/>
+    <rdfs:label>PFR TFI S.A.</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Date">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Period">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Date</rdfs:label>
+    <rdfs:label>Period</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#PFRStarterFunduszInwestycyjnyZamknięty">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#FundofFunds"/>
-    <rdfs:label>PFR Starter Fundusz Inwestycyjny Zamknięty</rdfs:label>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Address">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Address</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#maintainsConfidentialityOf">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Shareholder">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Shareholder</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#CivilCode">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Code"/>
+    <rdfs:label>Civil Code</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Businessday">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Business Day</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#PFRVenturesspzoo">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#LegalEntity"/>
+    <rdfs:label>PFR Ventures sp. z o.o.</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#RepublicofPoland">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Jurisdiction"/>
+    <rdfs:label>Republic of Poland</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Loss">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Loss</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Jurisdiction">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Jurisdiction</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#isHeldLiableFor">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>maintainsConfidentialityOf</rdfs:label>
+    <rdfs:label>isHeldLiableFor</rdfs:label>
     <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Information"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Breach"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#InvestmentPeriod">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#TimePeriod"/>
-    <rdfs:label>Investment Period</rdfs:label>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Court">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Court</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Authority"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#isCoveredBy">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Programme">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Programme</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Act">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Act</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Law"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#reportsTo">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>isCoveredBy</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Investment"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Fund"/>
+    <rdfs:label>reportsTo</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Company"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Investor"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#MOVENSInvestment">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Investment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Right">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Right</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#ElectronicNotice">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Notice"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Businessplan">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Business Plan</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Smokinvestment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>SMOK Investment</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Electronicsignature">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Electronic Signature</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Fund">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Fund</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasEmailForNotice">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>hasEmailForNotice</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Party"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#E-mailAddress"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#OperationalProgrammeIntelligentDevelopment">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#OperationalProgramme"/>
+    <rdfs:label>Operational Programme Intelligent Development</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Investment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Investment</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Agreement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Agreement</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#DeMinimis">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Threshold"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Threshold">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Threshold</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#convertibleloanagreementdated03/02/2022">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#ConvertibleLoanAgreement"/>
+    <rdfs:label>convertible loan agreement dated 03/02/2022</rdfs:label>
   </rdf:Description>
   <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Investor">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
     <rdfs:label>Investor</rdfs:label>
     <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#LegalEntity"/>
     <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Shareholder"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#OperationalProgrammeIntelligentDevelopment">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Movensinvestment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>MOVENS Investment</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Claim">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Claim</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#makesClaimAgainst">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>makesClaimAgainst</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Party"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Party"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasCurePeriod">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>hasCurePeriod</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Non-WarrantyBreach"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Period"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Investmentfund">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Investment Fund</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#entersIntoForceOn">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>entersIntoForceOn</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#SigningDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Code">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Code</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Law"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#StarterProgramme">
     <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Programme"/>
-    <rdfs:label>Operational Programme Intelligent Development</rdfs:label>
+    <rdfs:label>Starter Programme</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Currency">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Legalentity">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Currency</rdfs:label>
+    <rdfs:label>Legal Entity</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Warranty">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Founder">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Warranty</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#LegalProvision"/>
+    <rdfs:label>Founder</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Party"/>
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Shareholder"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#ThisAgreement">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
-    <rdfs:label>This Agreement</rdfs:label>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Convertibleloanagreement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Convertible Loan Agreement</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#maintainsConfidentialityOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>maintainsConfidentialityOf</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Party"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#ConfidentialInformation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#PP">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Party"/>
+    <rdfs:label>PP</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#usesFundsInAccordanceWith">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>usesFundsInAccordanceWith</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Investment"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#BusinessPlan"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#ActonCounteractingMoneyLaunderingandTerroristFinancingof1March2018">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Act"/>
+    <rdfs:label>Act on Counteracting Money Laundering and Terrorist Financing of 1 March 2018</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Founder1">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Founder"/>
+    <rdfs:label>Founder 1</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasShareholder">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>hasShareholder</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Company"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Shareholder"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasAddressForNotice">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>hasAddressForNotice</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Party"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Address"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Polishlaw">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Law"/>
+    <rdfs:label>Polish law</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#SMOKInvestment">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Investment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#prevailsOver">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>prevailsOver</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#ArticlesofAssociation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#WrittenNotice">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Notice"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Founder2">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Founder"/>
+    <rdfs:label>Founder 2</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Authority">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Authority</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Closedendinvestmentfund">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Closed-end Investment Fund</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#isFundedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>isFundedBy</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Investment"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Fund"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#DB">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Party"/>
+    <rdfs:label>DB</rdfs:label>
   </rdf:Description>
   <rdf:Description rdf:about="http://cognee.ai/ontology/custom#terminatesOn">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
@@ -69,36 +269,103 @@
     <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
     <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Date"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#isLocatedIn">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>isLocatedIn</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Address"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Country"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasThreshold">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>hasThreshold</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Breach"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Threshold"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#LegalEntity">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Signingdate">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Legal Entity</rdfs:label>
+    <rdfs:label>Signing Date</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#resolvesDisputeBy">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>resolvesDisputeBy</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Court"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Investment">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Confidentialinformation">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Investment</rdfs:label>
+    <rdfs:label>Confidential Information</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#BusinessPlan">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Obligation">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Business Plan</rdfs:label>
+    <rdfs:label>Obligation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Ministerinchargeofdevelopment">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Authority"/>
+    <rdfs:label>Minister in charge of development</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#PFRStarterFunduszInwestycyjnyZamknięty">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Closed-endInvestmentFund"/>
+    <rdfs:label>PFR Starter Fundusz Inwestycyjny Zamknięty</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#SCHEDULE186">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Schedule"/>
+    <rdfs:label>SCHEDULE 18.6</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Notice">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Notice</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Investmentperiod">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Investment Period</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Basket">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Basket</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Threshold"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#ArticlesofAssociation">
     <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Document"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#servesNoticeOn">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>servesNoticeOn</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Party"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Party"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Articlesofassociation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Articles of Association</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#actdated16April1993oncombatingunfaircompetition">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Act"/>
+    <rdfs:label>act dated 16 April 1993 on combating unfair competition</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#FiscalCriminalCodeof10September1999">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Act"/>
+    <rdfs:label>Fiscal Criminal Code of 10 September 1999</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#DC">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Party"/>
+    <rdfs:label>DC</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasBasketThreshold">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>hasBasketThreshold</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Basket"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#BankGospodarstwaKrajowego">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Authority"/>
+    <rdfs:label>Bank Gospodarstwa Krajowego</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#isGovernedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>isGovernedBy</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Law"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasSchedule">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>hasSchedule</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Schedule"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#executedWith">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>executedWith</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#ElectronicSignature"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Schedule">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Schedule</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Document"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#InvestmentFund">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Fund"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://cognee.ai/ontology/custom#conductsAuditOf">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
@@ -110,372 +377,111 @@
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
     <rdfs:label>Company</rdfs:label>
     <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#LegalEntity"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Schedule">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Schedule</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Document"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#ArticlesofAssociation">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Articles of Association</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Document"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#FiscalCriminalCodeof10September1999">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Law"/>
-    <rdfs:label>Fiscal Criminal Code of 10 September 1999</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#usesFundsInAccordanceWith">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasDeMinimisThreshold">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>usesFundsInAccordanceWith</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Company"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#BusinessPlan"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#FundofFunds">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Fund of Funds</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Fund"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#TimePeriod">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Time Period</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasCurrency">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>hasCurrency</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Amount"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Currency"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#assignsRightTo">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>assignsRightTo</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#SigningDate">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Date"/>
-    <rdfs:label>Signing Date</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#prevailsOver">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>prevailsOver</rdfs:label>
+    <rdfs:label>hasDeMinimisThreshold</rdfs:label>
     <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#ArticlesofAssociation"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#DeMinimis"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#reportsTo">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasClaimDeadline">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>reportsTo</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Company"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Investor"/>
+    <rdfs:label>hasClaimDeadline</rdfs:label>
+    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Claim"/>
+    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Period"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Fund">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Fund</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#LegalEntity"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Person">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Person</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Founder">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Founder</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Person"/>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Shareholder"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Programme">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Programme</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasAmount">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>hasAmount</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Loss"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Amount"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasAddress">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>hasAddress</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Address"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Liability">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Liability</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Shareholder">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Shareholder</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#entersIntoForceOn">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>entersIntoForceOn</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Date"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#PP">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:label>PP</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#actdated16April1993oncombatingunfaircompetition">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Law"/>
-    <rdfs:label>act dated 16 April 1993 on combating unfair competition</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Claim">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Claim</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#servesNoticeOn">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>servesNoticeOn</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Representation">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Representation</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#LegalProvision"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasCurePeriod">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>hasCurePeriod</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Breach"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#TimePeriod"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#BankGospodarstwaKrajowego">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Authority"/>
-    <rdfs:label>Bank Gospodarstwa Krajowego</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasSchedule">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>hasSchedule</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Schedule"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#RS">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:label>RS</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Party">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Party</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Ministerinchargeofdevelopment">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Authority"/>
-    <rdfs:label>Minister in charge of development</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Threshold">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Threshold</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#TheCompany">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Company"/>
-    <rdfs:label>The Company</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Authority">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Authority</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#basket">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Threshold"/>
-    <rdfs:label>basket</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Audit">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Audit</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#DC">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:label>DC</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#DB">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:label>DB</rdfs:label>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#InvestmentPeriod">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Period"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Document">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
     <rdfs:label>Document</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#EuropeanCommission">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Authority"/>
-    <rdfs:label>European Commission</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#SMOK">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Investor"/>
-    <rdfs:label>SMOK</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Breach">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Electronicnotice">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Breach</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#PLN50,00000">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Amount"/>
-    <rdfs:label>PLN 50,000.00</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Polishlaw">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Law"/>
-    <rdfs:label>Polish law</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#PLN">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Currency"/>
-    <rdfs:label>PLN</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#makesClaimAgainst">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>makesClaimAgainst</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#isProtectedBy">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>isProtectedBy</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Information"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Law"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Loss">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Loss</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#ActonCounteractingMoneyLaunderingandTerroristFinancingof1March2018">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Law"/>
-    <rdfs:label>Act on Counteracting Money Laundering and Terrorist Financing of 1 March 2018</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasLiabilityFor">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>hasLiabilityFor</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Party"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#Breach"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Court">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Court</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Authority"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#hasDeadline">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>hasDeadline</rdfs:label>
-    <rdfs:domain rdf:resource="http://cognee.ai/ontology/custom#Claim"/>
-    <rdfs:range rdf:resource="http://cognee.ai/ontology/custom#TimePeriod"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Agreement">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Agreement</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Document"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Law">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Law</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#ConflictofInterest">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Conflict of Interest</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Founder2">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Founder"/>
-    <rdfs:label>Founder 2</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Country">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Country</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#EuropeanCourtofAuditors">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Authority"/>
-    <rdfs:label>European Court of Auditors</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Address">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Address</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Notice">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Notice</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Document"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Right">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Right</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#RepublicofPoland">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Country"/>
-    <rdfs:label>Republic of Poland</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#deminimis">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Threshold"/>
-    <rdfs:label>de minimis</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#SMOKInvestment">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>SMOK Investment</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Investment"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#MOVENSInvestment">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>MOVENS Investment</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Investment"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Founder1">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Founder"/>
-    <rdfs:label>Founder 1</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#MOVENS">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Investor"/>
-    <rdfs:label>MOVENS</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Non-WarrantyBreach">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Non-Warranty Breach</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Breach"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Obligation">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Obligation</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#LegalProvision"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#LegalProvision">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Legal Provision</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#StarterProgramme">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Programme"/>
-    <rdfs:label>Starter Programme</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#PFRSA">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#LegalEntity"/>
-    <rdfs:label>PFR S.A.</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#PFRTFISA">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#LegalEntity"/>
-    <rdfs:label>PFR TFI S.A.</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#PFRVenturesspzoo">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#LegalEntity"/>
-    <rdfs:label>PFR Ventures sp. z o.o.</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#PLN100,00000">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Amount"/>
-    <rdfs:label>PLN 100,000.00</rdfs:label>
+    <rdfs:label>Electronic Notice</rdfs:label>
   </rdf:Description>
   <rdf:Description rdf:about="http://cognee.ai/ontology/custom">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
     <rdfs:label>Custom Legal Document Ontology</rdfs:label>
     <rdfs:comment>Ontology built from legal document chunks</rdfs:comment>
   </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#MOVENS">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Investor"/>
+    <rdfs:label>MOVENS</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Nonwarrantybreach">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Non-Warranty Breach</rdfs:label>
+  </rdf:Description>
   <rdf:Description rdf:about="http://cognee.ai/ontology/custom#MinisterofFinanceandDevelopment">
     <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Authority"/>
     <rdfs:label>Minister of Finance and Development</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#CivilCode">
-    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Law"/>
-    <rdfs:label>Civil Code</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Information">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Breach">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Information</rdfs:label>
+    <rdfs:label>Breach</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Amount">
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#RS">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Party"/>
+    <rdfs:label>RS</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#BusinessPlan">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Document"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Law">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Amount</rdfs:label>
+    <rdfs:label>Law</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#SMOK">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Investor"/>
+    <rdfs:label>SMOK</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Party">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Party</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Emailaddress">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>E-mail Address</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Dispute">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Dispute</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#E-mailAddress">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Address"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Operationalprogramme">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Operational Programme</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#ConvertibleLoanAgreement">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Agreement"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Non-WarrantyBreach">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Breach"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#EuropeanCommission">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Authority"/>
+    <rdfs:label>European Commission</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Writtennotice">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Written Notice</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#EuropeanCourtofAuditors">
+    <rdf:type rdf:resource="http://cognee.ai/ontology/custom#Authority"/>
+    <rdfs:label>European Court of Auditors</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Deminimis">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>De Minimis</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#Closed-endInvestmentFund">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#InvestmentFund"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cognee.ai/ontology/custom#OperationalProgramme">
+    <rdfs:subClassOf rdf:resource="http://cognee.ai/ontology/custom#Programme"/>
   </rdf:Description>
 </rdf:RDF>
