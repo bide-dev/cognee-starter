@@ -1,12 +1,14 @@
 import asyncio
 import os
 import pathlib
+import tempfile
+import threading
 import webbrowser
 import xml.etree.ElementTree as ET
 from typing import Dict, List, Optional, Union
 
 from pydantic import BaseModel, Field
-from rdflib import Graph, Namespace, URIRef, Literal, RDF, RDFS, OWL
+from rdflib import Graph, Namespace, URIRef, Literal, RDF, RDFS, OWL, SKOS
 
 from cognee import add, config, prune
 from cognee.infrastructure.llm import get_max_chunk_tokens
@@ -61,6 +63,88 @@ class AccumulatedOntology(BaseModel):
     properties: List[OntologyProperty] = Field(default_factory=list)
     individuals: List[OntologyIndividual] = Field(default_factory=list)
     hierarchies: List[OntologyHierarchy] = Field(default_factory=list)
+
+# Thread lock for ontology file operations
+_ontology_lock = threading.Lock()
+
+def load_existing_ontology(ontology_path: str) -> Optional[AccumulatedOntology]:
+    """
+    Load existing ontology from file and convert to AccumulatedOntology format.
+    Returns None if file doesn't exist or can't be loaded.
+    """
+    if not os.path.exists(ontology_path):
+        return None
+    
+    try:
+        # Load existing RDF graph
+        existing_graph = Graph()
+        existing_graph.parse(ontology_path)
+        
+        # Define namespaces
+        CUSTOM = Namespace("http://cognee.ai/ontology/custom#")
+        
+        # Extract elements from existing ontology
+        accumulated = AccumulatedOntology()
+        
+        # Extract classes
+        for cls in existing_graph.subjects(RDF.type, OWL.Class):
+            if str(cls).startswith(str(CUSTOM)):
+                label = existing_graph.value(cls, RDFS.label)
+                if label:
+                    accumulated.classes.append(str(label))
+        
+        # Extract properties
+        for prop in existing_graph.subjects(RDF.type, OWL.ObjectProperty):
+            if str(prop).startswith(str(CUSTOM)):
+                label = existing_graph.value(prop, RDFS.label)
+                domain = existing_graph.value(prop, RDFS.domain)
+                range_obj = existing_graph.value(prop, RDFS.range)
+                
+                if label:
+                    prop_obj = OntologyProperty(
+                        name=str(label),
+                        domain=str(existing_graph.value(domain, RDFS.label)) if domain else None,
+                        range=str(existing_graph.value(range_obj, RDFS.label)) if range_obj else None
+                    )
+                    accumulated.properties.append(prop_obj)
+        
+        # Extract individuals
+        for individual in existing_graph.subjects(RDF.type, None):
+            if str(individual).startswith(str(CUSTOM)):
+                # Get the class this individual belongs to
+                for cls in existing_graph.objects(individual, RDF.type):
+                    if cls != OWL.Class and str(cls).startswith(str(CUSTOM)):
+                        label = existing_graph.value(individual, RDFS.label)
+                        cls_label = existing_graph.value(cls, RDFS.label)
+                        
+                        if label and cls_label:
+                            ind_obj = OntologyIndividual(
+                                name=str(label),
+                                class_type=str(cls_label)
+                            )
+                            accumulated.individuals.append(ind_obj)
+                        break
+        
+        # Extract hierarchies (subclass relationships)
+        for child, parent in existing_graph.subject_objects(RDFS.subClassOf):
+            if str(child).startswith(str(CUSTOM)) and str(parent).startswith(str(CUSTOM)):
+                child_label = existing_graph.value(child, RDFS.label)
+                parent_label = existing_graph.value(parent, RDFS.label)
+                
+                if child_label and parent_label:
+                    hierarchy_obj = OntologyHierarchy(
+                        parent=str(parent_label),
+                        child=str(child_label)
+                    )
+                    accumulated.hierarchies.append(hierarchy_obj)
+        
+        logger.info(f"Loaded existing ontology with {len(accumulated.classes)} classes, "
+                   f"{len(accumulated.properties)} properties, {len(accumulated.individuals)} individuals")
+        return accumulated
+        
+    except Exception as e:
+        logger.warning(f"Failed to load existing ontology from {ontology_path}: {e}")
+        return None
 
 async def merge_ontology(catalog_path: str, output_path: str) -> str:
     """
@@ -128,6 +212,7 @@ async def build_ontology(chunks: list[DocumentChunk], custom_ontology_path: str 
     """
     Build a custom ontology from document chunks using LLM extraction.
     Accumulates ontological knowledge across all chunks and saves to custom.owl.
+    Now supports loading existing ontology and merging new knowledge.
     """
     logger.info(f"Building ontology from {len(chunks)} chunks")
     
@@ -156,8 +241,16 @@ For individuals, provide both the name and its most specific class.
 For hierarchies, specify parent-child relationships clearly.
 """
     
-    # Accumulate ontology across all chunks
-    accumulated = AccumulatedOntology()
+    # Load existing ontology if it exists
+    existing_ontology = load_existing_ontology(custom_ontology_path)
+    
+    # Initialize accumulated ontology with existing elements or create new
+    if existing_ontology:
+        accumulated = existing_ontology
+        logger.info(f"Loaded existing ontology as base")
+    else:
+        accumulated = AccumulatedOntology()
+        logger.info(f"Starting with empty ontology")
     
     for i, chunk in enumerate(chunks):
         logger.info(f"Processing chunk {i+1}/{len(chunks)}")
@@ -194,13 +287,42 @@ For hierarchies, specify parent-child relationships clearly.
     # Create RDF ontology
     await create_rdf_ontology(accumulated, custom_ontology_path)
     
+    # TODO: Add ontology validation for consistency and logical correctness
+    # TODO: Implement ontology versioning for change tracking
+    # TODO: Add metrics for ontology growth and quality
+    # TODO: Consider streaming/chunked processing for very large ontologies
+    
     logger.info(f"Ontology built with {len(accumulated.classes)} classes, {len(accumulated.properties)} properties, {len(accumulated.individuals)} individuals")
     
     return chunks
 
+def resolve_entity_labels(entities: List[str]) -> Dict[str, Dict[str, List[str]]]:
+    """
+    Resolve conflicts between entity labels using canonical naming.
+    Returns dict with canonical URIs as keys and label info as values.
+    """
+    entity_groups = {}
+    
+    for entity in entities:
+        # Create canonical form (lowercase, no spaces, no special chars)
+        canonical = entity.lower().replace(" ", "").replace("-", "").replace("_", "")
+        
+        if canonical not in entity_groups:
+            entity_groups[canonical] = {
+                "canonical_label": entity,  # First occurrence becomes canonical
+                "alternative_labels": []
+            }
+        else:
+            # Add as alternative if different from canonical
+            if entity != entity_groups[canonical]["canonical_label"]:
+                entity_groups[canonical]["alternative_labels"].append(entity)
+    
+    return entity_groups
+
 async def create_rdf_ontology(ontology: AccumulatedOntology, output_path: str = "./src/data/ontologies/custom.owl"):
     """
     Create and serialize RDF/OWL ontology from accumulated ontology elements.
+    Now supports SKOS vocabulary for conflict resolution and thread-safe operations.
     """
     # Create RDF graph
     g = Graph()
@@ -211,6 +333,7 @@ async def create_rdf_ontology(ontology: AccumulatedOntology, output_path: str = 
     g.bind("rdf", RDF)
     g.bind("rdfs", RDFS)
     g.bind("owl", OWL)
+    g.bind("skos", SKOS)
     
     # Add ontology header
     ontology_uri = URIRef("http://cognee.ai/ontology/custom")
@@ -218,12 +341,20 @@ async def create_rdf_ontology(ontology: AccumulatedOntology, output_path: str = 
     g.add((ontology_uri, RDFS.label, Literal("Custom Legal Document Ontology")))
     g.add((ontology_uri, RDFS.comment, Literal("Ontology built from legal document chunks")))
     
-    # Add classes
-    for cls_name in ontology.classes:
-        if cls_name:
-            cls_uri = CUSTOM[cls_name.replace(" ", "")]
+    # Add classes with conflict resolution
+    class_groups = resolve_entity_labels(ontology.classes)
+    for canonical, label_info in class_groups.items():
+        if label_info["canonical_label"]:
+            cls_uri = CUSTOM[canonical.title()]  # Use canonical form for URI
             g.add((cls_uri, RDF.type, OWL.Class))
-            g.add((cls_uri, RDFS.label, Literal(cls_name)))
+            
+            # Add primary label using SKOS if there are alternatives, otherwise use rdfs:label
+            if label_info["alternative_labels"]:
+                g.add((cls_uri, SKOS.prefLabel, Literal(label_info["canonical_label"])))
+                for alt_label in label_info["alternative_labels"]:
+                    g.add((cls_uri, SKOS.altLabel, Literal(alt_label)))
+            else:
+                g.add((cls_uri, RDFS.label, Literal(label_info["canonical_label"])))
     
     # Add hierarchies (subclass relationships)
     for hierarchy in ontology.hierarchies:
@@ -258,9 +389,27 @@ async def create_rdf_ontology(ontology: AccumulatedOntology, output_path: str = 
     # Ensure output directory exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     
-    # Serialize to file
-    g.serialize(destination=output_path, format="xml")
-    logger.info(f"Custom ontology saved to {output_path}")
+    # Thread-safe atomic write operation
+    with _ontology_lock:
+        # Create temporary file in same directory to ensure atomic move
+        output_dir = os.path.dirname(output_path)
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.owl', 
+                                       dir=output_dir, delete=False) as temp_file:
+            temp_path = temp_file.name
+        
+        try:
+            # Serialize to temporary file
+            g.serialize(destination=temp_path, format="xml")
+            
+            # Atomic move to final location
+            os.rename(temp_path, output_path)
+            logger.info(f"Custom ontology saved to {output_path}")
+            
+        except Exception as e:
+            # Clean up temporary file on error
+            if os.path.exists(temp_path):
+                os.unlink(temp_path)
+            raise e
 
 
 
@@ -303,6 +452,21 @@ async def get_tasks(  # TODO: Find out a better way to do this (Boris's comment)
 async def ingest(file_path: str):
     await prune.prune_data()
     await prune.prune_system(metadata=True)
+    
+    # Clean up ontology files for fresh start
+    custom_ontology_path = "./src/data/ontologies/custom.owl"
+    if os.path.exists(custom_ontology_path):
+        os.remove(custom_ontology_path)
+        logger.info(f"Removed existing ontology file: {custom_ontology_path}")
+    
+    # Clean up any backup or temporary ontology files
+    ontology_dir = os.path.dirname(custom_ontology_path)
+    if os.path.exists(ontology_dir):
+        for filename in os.listdir(ontology_dir):
+            if filename.endswith(('.owl.bak', '.owl.tmp', '.owl~')):
+                backup_path = os.path.join(ontology_dir, filename)
+                os.remove(backup_path)
+                logger.info(f"Removed backup ontology file: {backup_path}")
 
     await add(file_path)
 
