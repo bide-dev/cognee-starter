@@ -197,3 +197,4 @@ SWE-bench_testsample/
 
 src/data/legal/input/*
 requirements
+.claude/settings.local.json
