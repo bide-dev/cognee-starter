@@ -420,6 +420,50 @@ async def create_rdf_ontology(ontology: AccumulatedOntology, output_path: str = 
 
 
 
+async def prepare_documents_and_extract_all_chunks(
+    documents: List[Document],
+    user: User = None,
+    max_chunk_size: int = None,
+    chunker=TextChunker,
+    permissions: List[str] = ["write"]
+) -> List[DocumentChunk]:
+    """
+    Preparation task that runs document classification, permission checks, and chunk extraction.
+    Collects ALL chunks before returning them as a batch for subsequent processing.
+    This ensures the ontology is built from the complete set of chunks.
+    """
+    logger.info(f"Starting document preparation phase for {len(documents)} documents")
+    
+    # Phase 1: Classify documents
+    logger.info("Phase 1: Classifying documents")
+    classified_documents = await classify_documents(documents)
+    
+    # Phase 2: Check permissions
+    logger.info("Phase 2: Checking permissions")
+    permission_checked_documents = await check_permissions_on_documents(
+        classified_documents, user=user, permissions=permissions
+    )
+    
+    # Phase 3: Extract chunks and collect ALL of them
+    logger.info("Phase 3: Extracting chunks from all documents")
+    all_chunks = []
+    
+    # Process documents and collect all chunks
+    async for chunk_batch in extract_chunks_from_documents(
+        permission_checked_documents,
+        max_chunk_size=max_chunk_size,
+        chunker=chunker
+    ):
+        # chunk_batch might be a single chunk or list of chunks
+        if isinstance(chunk_batch, list):
+            all_chunks.extend(chunk_batch)
+        else:
+            all_chunks.append(chunk_batch)
+    
+    logger.info(f"Document preparation complete. Collected {len(all_chunks)} chunks from all documents")
+    return all_chunks
+
+
 async def get_tasks(  # TODO: Find out a better way to do this (Boris's comment)
     user: User = None,
     graph_model: BaseModel = KnowledgeGraph,
@@ -433,13 +477,15 @@ async def get_tasks(  # TODO: Find out a better way to do this (Boris's comment)
     custom_ontology_path = str(project_root / "src" / "data" / "ontologies" / "custom.owl")
     
     default_tasks = [
-        Task(classify_documents),
-        Task(check_permissions_on_documents, user=user, permissions=["write"]),
+        # Phase 1: Preparation - collect ALL chunks before proceeding
         Task(
-            extract_chunks_from_documents,
+            prepare_documents_and_extract_all_chunks,
+            user=user,
             max_chunk_size=chunk_size or get_max_chunk_tokens(),
             chunker=chunker,
+            permissions=["write"],
         ),
+        # Phase 2: Process all chunks with complete ontology
         Task(build_ontology, custom_ontology_path=custom_ontology_path),
         Task(
             extract_graph_from_data,
